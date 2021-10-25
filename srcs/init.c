@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:41:54 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/10 20:46:29 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/24 09:52:27 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	init_struct(t_table *t, char **av)
 	{
 		if (init_philo(t->philo[i], i) == -1)
 			ft_err(t, "Mutex failed: ", 0);
-		pthread_mutex_init(t->fork[i], NULL);
+		if (pthread_mutex_init(t->fork[i], NULL) == 1)
+			ft_err(t, "Mutex failed: ", 0);
 	}
 }

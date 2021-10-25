@@ -6,7 +6,7 @@
 #    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/22 23:19:50 by bmangin           #+#    #+#              #
-#    Updated: 2021/10/10 20:35:24 by bmangin          ###   ########lyon.fr    #
+#    Updated: 2021/10/24 09:57:30 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,10 +61,11 @@ ${PATH_B}/%.o:	%.c ${HEADER}
 ${NAME}:	${BIN} ${HEADERS}
 		${CCF} ${INC} ${BIN} -o $@ ${LIB}
 
-fs:	${BIN} ${HEADER}
-		${CCFS} ${INC} ${BIN} -o $@ ${LIB}
+fs:		crea_b ${BIN} ${HEADER}
+		${CCFS} ${INC} ${BIN} -o ${NAME} ${LIB}
 
 crea_b :
+	mkdir -p ${PATH_B}
 	${shell mkdir -p ${PATH_B}}
 
 clean:
