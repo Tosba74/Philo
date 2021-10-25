@@ -1,7 +1,5 @@
 #include "philo.h"
 
-#define NB_PHILO 5
-
 void	*better_life(void *arg)
 {
 	t_philo	*p;
@@ -11,15 +9,15 @@ void	*better_life(void *arg)
 	dprintf(2, "\033[32mPhilo %d think = %d\033[0m\n",
 		p->id, p->state);
 	p->state += 1;
-	if (pthread_mutex_lock(p->t->fork[p->id])
-		& pthread_mutex_lock(p->t->fork[(p->id + 1) % p->t->nb]))
+	if (pthread_mutex_lock(&p->t->fork[p->id])
+		& pthread_mutex_lock(&p->t->fork[(p->id + 1) % p->t->nb]))
 	{
 		dprintf(2, "\033]33mPhilo %d eat = %d\033[0m\n",
 			p->id, p->state);
 		usleep(100);
 	}
-	pthread_mutex_lock(p->t->fork[p->id]);
-	pthread_mutex_lock(p->t->fork[(p->id + 1) % p->t->nb]);
+	pthread_mutex_lock(&p->t->fork[p->id]);
+	pthread_mutex_lock(&p->t->fork[(p->id + 1) % p->t->nb]);
 	p->state += 1;
 	dprintf(2, "\033]31mPhilo %d sleep = %d\033[0m\n",
 		p->id, p->state);
@@ -46,10 +44,9 @@ int	main(int ac, char **av)
 		return (msg_err("First arg: ", "Invalid argument\n", 22));
 	if (init(&table, nb_philo) == -1)
 		return (msg_err("Malloc failed: ", "Insufficient memory!\n", 22));
-	dprintf(2, "la la la!!\n");
-		// print_table(&table);
-	// dprintf(2, "je suis la !!\n");
+	print_table(&table);
 	init_struct(&table, av);
+	printf("%d != %d\n", nb_philo, table.nb);
 	dprintf(2, "nan, je suis la !!\n");
 	print_table(&table);
 	free_struct(&table);

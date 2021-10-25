@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 12:54:38 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/10 20:48:21 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/25 16:07:57 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	print_table(t_table *t)
 	dprintf(2, "| Time_to_sleep ==> %4d     |\n", t->time_to_sleep);
 	dprintf(2, "| Time_to_think ==> %4d     |\n", t->time_to_think);
 	// dprintf(2, "| Time: %2d:%2d            |\n", compare_time(get_time_ms()), 0);
-	while (++i < (int)t->nb)
+	while (++i < t->nb)
 	{
 		dprintf(2, "+=============================+\n");
 		dprintf(2, "| id => %2u || state = > %d |",
-			t->philo[i]->id, t->philo[i]->state);
+			t->philo[i].id, t->philo[i].state);
 		dprintf(2, "| Table adrress ==> %p |\n",
-			t->philo[i]->t);
-		print_philo(t->philo[i]);
+			t->philo[i].t);
+		print_philo(&t->philo[i]);
 	}
 	dprintf(2, "+=============================+\n");
 }
