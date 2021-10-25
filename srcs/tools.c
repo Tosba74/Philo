@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 21:13:03 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/25 15:52:45 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/25 18:31:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,17 @@ void	free_struct(t_table *table)
 
 	i = -1;
 	print_table(table);
-	while (++i < (int)table->nb)
+	while (++i < table->nb)
 	{
+		pthread_mutex_unlock(&table->philo[i].death);
+		pthread_mutex_unlock(&table->fork[i]);
 		pthread_mutex_destroy(&table->philo[i].death);
-		// pthread_exit(NULL);
-		if (table->philo)
-			free(table->philo);
-	}
-	if (table->philo)
-		free(table->philo);
-	i = -1;
-	while (++i < (int)table->nb)
-	{
-		pthread_mutex_destroy(&table->philo[i].death);
-		// if (table->fork[i])
-		// 	free(table->fork[i]);
+		pthread_mutex_destroy(&table->fork[i]);
 	}
 	if (table->fork)
 		free(table->fork);
-	// if (table)
-	// 	free(table);
+	if (table->philo)
+		free(table->philo);
 }
 
 int	ft_atoi(const char *str)
