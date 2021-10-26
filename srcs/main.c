@@ -2,6 +2,14 @@
 
 void	*better_life(void *arg)
 {
+	printf("\n\033[33mPHILO #%d\033[0m\n", ((t_philo *)arg)->id);
+	while (!((t_philo *)arg)->t->ready)
+		return (0);
+	((t_philo *)arg)->last_meal = ((t_philo *)arg)->t->lm_time;
+	printf("\n\033[32mPHILO #%d\033[0m\n", ((t_philo *)arg)->id);
+	say_me(((t_philo *)arg)->t, ((t_philo *)arg)->id, "JAI LA DALLE\n");
+	// print_philo((t_philo *)arg);
+	/*
 	t_philo	*p;
 
 	p = arg;
@@ -21,12 +29,8 @@ void	*better_life(void *arg)
 	p->state += 1;
 	dprintf(2, "\033]31mPhilo %d sleep = %d\033[0m\n",
 		p->id, p->state);
-	return (0);
-}
-
-void	philo(char **av)
-{
-	(void)av;
+	*/
+	return(0);
 }
 
 int	main(int ac, char **av)
@@ -44,11 +48,14 @@ int	main(int ac, char **av)
 		return (msg_err("First arg: ", "Invalid argument\n", 22));
 	if (init(&table, nb_philo) == -1)
 		return (msg_err("Malloc failed: ", "Insufficient memory!\n", 22));
-	print_table(&table);
 	init_struct(&table, av);
-	printf("%d != %d\n", nb_philo, table.nb);
-	dprintf(2, "nan, je suis la !!\n");
-	print_table(&table);
+	sleep(5);
+	printf("\n\033[31mREADY\033[0m\n");
+	
+	// print_table(&table);
+	// printf("%d != %d\n", nb_philo, table.nb);
+	// dprintf(2, "nan, je suis la !!\n");
+	// print_table(&table);
 	free_struct(&table);
 	return (0);
 }

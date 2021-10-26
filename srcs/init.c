@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:41:54 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/25 18:40:11 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/26 15:53:11 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,27 @@ void	init_struct(t_table *t, char **av)
 	int		i;
 
 	i = -1;
-	gettimeofday(&t->start, NULL);
 	t->nb = ft_atoi(av[1]);
 	t->time_to_die = ft_atoi(av[2]);
 	t->time_to_eat = ft_atoi(av[3]);
 	t->time_to_sleep = ft_atoi(av[4]);
+	pthread_mutex_init(&t->mutex, NULL);
+	pthread_mutex_init(&t->state, NULL);
 	if (!av[5])
 		t->time_to_think = -1;
 	else
 		t->time_to_think = ft_atoi(av[5]);
+	t->ready = 0;
 	while (++i < t->nb)
 	{
-		printf("%d -- %d\n", i, t->nb);
-		// if (init_philo(t->philo[i], i) == -1)
-			// ft_err(t, "Mutex failed: ", 0);
+		pthread_mutex_init(&t->fork[i], NULL);
 		t->philo[i].id = i;
 		t->philo[i].state = 0;
+		pthread_mutex_init(&t->philo[i].death, NULL);
 		t->philo[i].t = t;
-		// if (pthread_mutex_init(t->fork[i], NULL) == -1)
-		// 	ft_err(t, "Mutex failed: ", 0);
+		pthread_create(&t->philo[i].thread, NULL, better_life, &t->philo[i]);
 	}
+	sleep(5);
+	gettimeofday(&t->start, NULL);
+	t->ready = 1;
 }

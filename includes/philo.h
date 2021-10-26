@@ -41,6 +41,7 @@ typedef enum e_state
 typedef struct s_philo
 {
 	unsigned int		id;
+	long				last_meal;
 	t_state				state;
 	pthread_t			thread;
 	pthread_mutex_t		death;
@@ -49,14 +50,15 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int		nb;
-	int		nb_meal;
+	int					nb;
+	int					nb_meal;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					time_to_think;
 	int					is_dead;
-	long long			lm_time;
+	int					ready;
+	long				lm_time;
 	t_timeval			start;
 	t_philo				*philo;
 	pthread_mutex_t		*fork;
@@ -66,8 +68,10 @@ typedef struct s_table
 
 int		init(t_table *t, int nb_philo);
 void	init_struct(t_table *t, char **av);
+long	get_time_ms(void);
 
 int		ft_atoi(const char *str);
+void	ft_putnbr(long n);
 void	free_struct(t_table *table);
 
 void	*better_life(void *arg);
@@ -77,6 +81,8 @@ void	ft_putstr_fd(char *str, int fd);
 void	ft_err(t_table *t, char *s, int err);
 
 void	print_table(t_table *t);
+void	print_philo(t_philo *p);
+void	say_me(t_table *t, int id, char *s);
 
 /*
 memset, printf, malloc, free, write, usleep, gettimeofday,

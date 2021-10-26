@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 19:55:10 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 10:53:31 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/26 15:47:00 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,21 @@ void	say_me(t_table *t, int id, char *s)
 	pthread_mutex_lock(&t->state);
 	if (t->nb_meal != t->nb && !t->is_dead)
 	{
-		printf("%lli ", get_time() - t->lm_time);
-		printf("%d %s\n", id, s);
+		printf("%li ", get_time_ms() - t->lm_time);
+		ft_putstr_fd("[", 1);
+		ft_putnbr(id);
+		ft_putstr_fd("]", 1);
+		ft_putstr_fd(s, 1);
+		ft_putstr_fd("\n", 1);
 	}
 	else if (s[3] == 'd')
 	{
-		printf("%lli ", get_time() - t->lm_time);
-		printf("%d %s\n", id, s);
+		printf("%li ", get_time_ms() - t->lm_time);
+		ft_putstr_fd("[", 1);
+		ft_putnbr(id);
+		ft_putstr_fd("]", 1);
+		ft_putstr_fd(s, 1);
+		ft_putstr_fd("\n", 1);
 	}
 	pthread_mutex_unlock(&t->state);
 }
