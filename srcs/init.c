@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:41:54 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 15:53:11 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/26 18:51:33 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,15 @@ void	init_struct(t_table *t, char **av)
 	t->ready = 0;
 	while (++i < t->nb)
 	{
-		pthread_mutex_init(&t->fork[i], NULL);
 		t->philo[i].id = i;
 		t->philo[i].state = 0;
 		pthread_mutex_init(&t->philo[i].death, NULL);
 		t->philo[i].t = t;
 		pthread_create(&t->philo[i].thread, NULL, better_life, &t->philo[i]);
+		pthread_mutex_init(&t->fork[i], NULL);
 	}
 	sleep(5);
 	gettimeofday(&t->start, NULL);
+	t->lm_time = get_time_ms();
 	t->ready = 1;
 }

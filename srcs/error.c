@@ -6,19 +6,28 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 19:55:10 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 15:47:00 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/26 18:53:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	ft_strlen(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
 void	ft_putstr_fd(char *str, int fd)
 {
-	int		i;
+	int	len;
 
-	i = -1;
-	while (str[++i])
-		write(fd, &str[i], 1);
+	len = ft_strlen(str);
+	write(fd, str, len);
 }
 
 static const t_err	*get_err(int err)
@@ -66,21 +75,28 @@ void	say_me(t_table *t, int id, char *s)
 	pthread_mutex_lock(&t->state);
 	if (t->nb_meal != t->nb && !t->is_dead)
 	{
-		printf("%li ", get_time_ms() - t->lm_time);
-		ft_putstr_fd("[", 1);
-		ft_putnbr(id);
-		ft_putstr_fd("]", 1);
-		ft_putstr_fd(s, 1);
-		ft_putstr_fd("\n", 1);
+		// printf("\033[32m%i\033[0m ", compare_time(get_time_ms()));
+		printf("\033[32m%i\033[0m ", compare_time(t->philo[id].last_meal));
+		// printf("\033[32m%i\033[0m ", compare_time(t->lm_time));
+		printf("\033[33m[%d] %s\033[0m\n", id, s);
+		// ft_putstr_fd("[", 1);
+		// ft_putnbr(id);
+		// ft_putstr_fd("]", 1);
+		// ft_putstr_fd(s, 1);
+		// ft_putstr_fd("\n", 1);
 	}
 	else if (s[3] == 'd')
 	{
-		printf("%li ", get_time_ms() - t->lm_time);
-		ft_putstr_fd("[", 1);
-		ft_putnbr(id);
-		ft_putstr_fd("]", 1);
-		ft_putstr_fd(s, 1);
-		ft_putstr_fd("\n", 1);
+		// printf("\033[32m%i\033[0m ", compare_time(get_time_ms()));
+		// printf("\033[32m%i\033[0m ", compare_time(t->lm_time));
+		printf("\033[32m%i\033[0m ", compare_time(t->philo[id].last_meal));
+		// printf("%li ", get_time_ms() - t->lm_time);
+		printf("[%d] %s\n", id, s);
+		// ft_putstr_fd("[", 1);
+		// ft_putnbr(id);
+		// ft_putstr_fd("]", 1);
+		// ft_putstr_fd(s, 1);
+		// ft_putstr_fd("\n", 1);
 	}
 	pthread_mutex_unlock(&t->state);
 }

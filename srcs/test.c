@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 12:54:38 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 15:06:20 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/26 18:05:31 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ long	get_time_ms(void)
 int	compare_time(long time)
 {
 	return (time < get_time_ms());
+}
+
+void	acc_sleep(long check)
+{
+	long	time;
+
+	time = get_time_ms();
+	while (get_time_ms() - time < check)
+		usleep(50);
 }
 
 void	print_philo(t_philo *p)
