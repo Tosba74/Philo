@@ -50,13 +50,18 @@ typedef struct s_philo
 typedef struct s_table
 {
 	int		nb;
+	int		nb_meal;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					time_to_think;
+	int					is_dead;
+	long long			lm_time;
 	t_timeval			start;
-	pthread_mutex_t		*fork;
 	t_philo				*philo;
+	pthread_mutex_t		*fork;
+	pthread_mutex_t		mutex;
+	pthread_mutex_t		state;
 }	t_table;
 
 int		init(t_table *t, int nb_philo);

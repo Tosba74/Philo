@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 19:55:10 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/01 15:36:13 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/26 10:53:31 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,25 @@ int	msg_err(char *s1, char *s2, int ret)
 void	ft_err(t_table *t, char *s, int err)
 {
 	t_err	*error;
-	int		tmp;
 
 	error = NULL;
 	error = (t_err *)get_err(err);
-	tmp = msg_err(s, error->strerror, error->err);
 	free_struct(t);
-	exit(tmp);
+	exit(msg_err(s, error->strerror, error->err));
+}
+
+void	say_me(t_table *t, int id, char *s)
+{
+	pthread_mutex_lock(&t->state);
+	if (t->nb_meal != t->nb && !t->is_dead)
+	{
+		printf("%lli ", get_time() - t->lm_time);
+		printf("%d %s\n", id, s);
+	}
+	else if (s[3] == 'd')
+	{
+		printf("%lli ", get_time() - t->lm_time);
+		printf("%d %s\n", id, s);
+	}
+	pthread_mutex_unlock(&t->state);
 }
