@@ -39,7 +39,7 @@ t_philo	**init_philo_thread(void)
 		philo[i]->id = i;
 		philo[i]->time_to_die = 63;
 		philo[i]->time_to_eat = 63;
-		philo[i]->time_to_think = 63;
+		philo[i]->max_meal = 63;
 		philo[i]->time_to_sleep = 63;
 		philo[i]->state = THINKING;
 		pthread_create(&philo[i]->thread, NULL, &better_life, philo[i]);

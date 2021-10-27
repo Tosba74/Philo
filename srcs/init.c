@@ -6,11 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:41:54 by bmangin           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/26 17:25:25 by bmangin          ###   ########lyon.fr   */
-=======
-/*   Updated: 2021/10/26 18:51:33 by bmangin          ###   ########lyon.fr   */
->>>>>>> 4b563cc64f8934e349e387e6ea799eadcf063d9b
+/*   Updated: 2021/10/26 22:06:42 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +51,13 @@ void	init_struct(t_table *t, char **av)
 	pthread_mutex_init(&t->mutex, NULL);
 	pthread_mutex_init(&t->state, NULL);
 	if (!av[5])
-		t->time_to_think = -1;
+		t->max_meal = -1;
 	else
-		t->time_to_think = ft_atoi(av[5]);
+		t->max_meal = ft_atoi(av[5]);
 	t->ready = 0;
+	if (table.nb == 0 || table.time_to_die == 0 || table.time_to_eat == 0
+		|| table.time_to_sleep == 0 || table.max_meal == 0)
+			return (0);
 	while (++i < t->nb)
 	{
 		t->philo[i].id = i;
@@ -71,5 +70,4 @@ void	init_struct(t_table *t, char **av)
 	sleep(5);
 	gettimeofday(&t->start, NULL);
 	t->lm_time = get_time_ms();
-	t->ready = 1;
 }

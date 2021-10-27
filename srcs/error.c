@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 19:55:10 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 18:53:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/26 22:09:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static const t_err	*get_err(int err)
 	static const t_err	err_p[] = {
 		{ENOMEM, "Insufficient memory!\n"},
 		{E2BIG, "Argument list too long\n"},
-		{EINVAL, "Invalid argument, Use -debug\n"},
+		{EINVAL, "Invalid argument\n"},
 		{EAGAIN, "Insufficient resources!\n"},
 		{EINVAL, "Not a typewriter\n"},
 		{EFAULT, "Bad address\n"},

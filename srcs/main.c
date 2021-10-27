@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/26 21:57:41 by bmangin           #+#    #+#             */
+/*   Updated: 2021/10/26 22:13:47 by bmangin          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	*better_life(void *arg)
@@ -40,25 +52,27 @@ void	*better_life(void *arg)
 
 int	main(int ac, char **av)
 {
+	int			i;
 	int			nb_philo;
 	t_table		table;
 
+	i = -1;
+	nb_philo = ft_atoi(av[1]);
+	table = (t_table){};
 	if (ac > 6)
 		return (msg_err("Arg: ", "Argument list too long\n", 7));
 	if (ac < 5)
 		return (msg_err("Arg: ", "Argument list too short\n", 7));
-	nb_philo = ft_atoi(av[1]);
-	table = (t_table){};
-	if (nb_philo < 2)
-		return (msg_err("First arg: ", "Invalid argument\n", 22));
 	if (init(&table, nb_philo) == -1)
 		return (msg_err("Malloc failed: ", "Insufficient memory!\n", 22));
+	if (nb_philo < 2)
+		ft_err(&table, "First Arg: ", 2);
 	init_struct(&table, av);
+	table.ready++;
 	// print_table(&table);
 	// printf("%d != %d\n", nb_philo, table.nb);
 	// dprintf(2, "nan, je suis la !!\n");
 	// print_table(&table);
-	int i = -1;
 	while (++i < table.nb)
 		pthread_join(table.philo[i].thread, NULL);
 	free_struct(&table);
