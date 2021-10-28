@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:41:54 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/28 17:00:15 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/28 18:48:04 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	init_philo(t_table *t)
 		t->philo[i].frigth = i;
 		t->philo[i].fleft = (i - 1) % t->nb;
 		t->philo[i].meals = i;
-		pthread_mutex_init(&t->philo[i].death, NULL);
 		t->philo[i].t = t;
 		pthread_create(&t->philo[i].thread, NULL,
 			better_life, &t->philo[i]);
@@ -57,7 +56,7 @@ void	init_struct(t_table *t, char **av)
 	t->time_to_eat = ft_atoi(av[3]);
 	t->time_to_sleep = ft_atoi(av[4]);
 	pthread_mutex_init(&t->state, NULL);
-	pthread_mutex_init(&t->state, NULL);
+	pthread_mutex_init(&t->eating, NULL);
 	if (!av[5])
 		t->max_meal = -1;
 	else

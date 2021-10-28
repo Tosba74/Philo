@@ -62,6 +62,7 @@ typedef struct s_table
 
 int			init(t_table *t, int nb_philo);
 void		init_struct(t_table *t, char **av);
+void		acc_sleep(long long check);
 long long	get_time(void);
 long long	compare_time(long long time);
 

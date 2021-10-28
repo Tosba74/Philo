@@ -6,63 +6,82 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:57:41 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:35:16 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/28 18:43:59y bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	eat(t_philo	*p)
+{
+	if (p->id % 2 == 0)
+	{
+		pthread_mutex_lock(&p->t->fork[p->frigth]);
+		say_me(p->t, p->id, "take a fork!");
+		pthread_mutex_lock(&p->t->fork[p->fleft]);
+		say_me(p->t, p->id, "take a fork!");
+	}
+	else
+	{
+		pthread_mutex_lock(&p->t->fork[p->fleft]);
+		say_me(p->t, p->id, "take a fork!");
+		if (p->t->nb == 1)
+			return ;
+		pthread_mutex_lock(&p->t->fork[p->frigth]);
+		say_me(p->t, p->id, "take a fork!");
+	}
+	pthread_mutex_lock(&p->t->eating);
+	p->last_meal = get_time();
+	pthread_mutex_unlock(&p->t->eating);
+	say_me(p->t, p->id, "is eating");
+	acc_sleep(p->t->time_to_eat);
+	pthread_mutex_unlock(&p->t->fork[p->frigth]);
+	pthread_mutex_unlock(&p->t->fork[p->fleft]);
+}
 
 void	*better_life(void *arg)
 {
 	t_philo	*p;
 
 	p = arg;
-	// printf("\033[32mPHILO #%d\033[0m\n", p->id);
-	// printf("\033[33mPHILO #%d\033[0m\n", p->id);
 	while (!p->t->ready)
 		;
 	p->last_meal = p->t->lm_time;
-	while (!p->t->is_dead || p->meals < p->t->max_meal)
+	// while (!p->t->is_dead)
+	// {
+		// pthread_mutex_lock(&p->t->fork[p->fleft]);
+		// say_me(p->t, p->id, "take a fork!!");
+		// pthread_mutex_lock(&p->t->fork[p->frigth]);
+		// say_me(p->t, p->id, "take a fork!");
+		// say_me(p->t, p->id, "is eating ...");
+		// p->meals++;
+		// p->last_meal = compare_time(p->t->lm_time);
+		// if (p->meals > p->t->nb_meal)
+			// p->t->nb_meal = p->meals;
+		// pthread_mutex_unlock(&p->t->fork[p->fleft]);
+		// pthread_mutex_unlock(&p->t->fork[p->frigth]);
+		// say_me(p->t, p->id, "is sleeping ...");
+		// sleep(5);
+		// if (p->t->nb_meal == p->t->nb || p->t->is_dead)
+			// return (NULL);
+		// say_me(p->t, p->id, "is thinking ...");
+	// }
+	// p->t->is_dead = 1;
+	while (!p->t->is_dead)
 	{
-		say_me(p->t, p->id, "is thinking ...");
-		pthread_mutex_lock(&p->t->fork[p->fleft]);
-		say_me(p->t, p->id, "take a fork!");
-		pthread_mutex_lock(&p->t->fork[p->frigth]);
-		say_me(p->t, p->id, "take a fork!");
-		say_me(p->t, p->id, "is eating ...");
+		eat(p);
 		p->meals++;
-		p->last_meal = compare_time(p->t->lm_time);
-		if (p->meals > p->t->nb_meal)
-			p->t->nb_meal = p->meals;
-		pthread_mutex_unlock(&p->t->fork[p->fleft]);
-		pthread_mutex_unlock(&p->t->fork[p->frigth]);
+		if (p->meals == p->t->max_meal && p->t->nb > 1)
+			p->t->max_meal++;
+		if (p->t->max_meal == p->t->nb || p->t->nb == 1 || p->t->is_dead)
+			return (NULL);
 		say_me(p->t, p->id, "is sleeping ...");
-		sleep(5);
+		acc_sleep(p->t->time_to_sleep);
+		if (p->t->max_meal == p->t->nb || p->t->is_dead)
+			return (NULL);
+		say_me(p->t, p->id, "is thinking ...");
 	}
-	p->t->is_dead = 1;
-	// print_philo((t_philo *)arg);
-	/*
-	t_philo	*p;
-
-	p = arg;
-	dprintf(2, "\033[34mPhilo #%u \033[0m\n", p->t->nb);
-	dprintf(2, "\033[32mPhilo %d think = %d\033[0m\n",
-		p->id, p->state);
-	p->state += 1;
-	if (pthread_mutex_lock(&p->t->fork[p->id])
-		& pthread_mutex_lock(&p->t->fork[(p->id + 1) % p->t->nb]))
-	{
-		dprintf(2, "\033]33mPhilo %d eat = %d\033[0m\n",
-			p->id, p->state);
-		usleep(100);
-	}
-	pthread_mutex_lock(&p->t->fork[p->id]);
-	pthread_mutex_lock(&p->t->fork[(p->id + 1) % p->t->nb]);
-	p->state += 1;
-	dprintf(2, "\033]31mPhilo %d sleep = %d\033[0m\n",
-		p->id, p->state);
-	*/
-	return (0);
+	return (NULL);
 }
 
 static void	check_life(t_table *t)
@@ -76,7 +95,7 @@ static void	check_life(t_table *t)
 		if (get_time() - t->philo[i].last_meal > t->time_to_die
 			&& t->max_meal != t->nb)
 		{
-			t->is_dead= 1;
+			t->is_dead = 1;
 			say_me(t, i, "is dead");
 			pthread_mutex_unlock(&t->eating);
 			return ;
