@@ -57,7 +57,7 @@ typedef struct s_table
 	t_timeval			start;
 	t_philo				*philo;
 	pthread_mutex_t		*fork;
-	pthread_mutex_t		mutex;
+	pthread_mutex_t		eating;
 	pthread_mutex_t		state;
 }	t_table;
 

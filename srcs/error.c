@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 19:55:10 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 22:09:22 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/28 18:03:39 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,28 +75,13 @@ void	say_me(t_table *t, int id, char *s)
 	pthread_mutex_lock(&t->state);
 	if (t->nb_meal != t->nb && !t->is_dead)
 	{
-		// printf("\033[32m%i\033[0m ", compare_time(get_time_ms()));
 		printf("\033[32m%i\033[0m ", compare_time(t->philo[id].last_meal));
-		// printf("\033[32m%i\033[0m ", compare_time(t->lm_time));
 		printf("\033[33m[%d] %s\033[0m\n", id, s);
-		// ft_putstr_fd("[", 1);
-		// ft_putnbr(id);
-		// ft_putstr_fd("]", 1);
-		// ft_putstr_fd(s, 1);
-		// ft_putstr_fd("\n", 1);
 	}
 	else if (s[3] == 'd')
 	{
-		// printf("\033[32m%i\033[0m ", compare_time(get_time_ms()));
-		// printf("\033[32m%i\033[0m ", compare_time(t->lm_time));
 		printf("\033[32m%i\033[0m ", compare_time(t->philo[id].last_meal));
-		// printf("%li ", get_time_ms() - t->lm_time);
 		printf("[%d] %s\n", id, s);
-		// ft_putstr_fd("[", 1);
-		// ft_putnbr(id);
-		// ft_putstr_fd("]", 1);
-		// ft_putstr_fd(s, 1);
-		// ft_putstr_fd("\n", 1);
 	}
 	pthread_mutex_unlock(&t->state);
 }

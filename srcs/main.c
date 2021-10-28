@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:57:41 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/28 16:50:36 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/28 18:07:17 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*better_life(void *arg)
 		pthread_mutex_unlock(&p->t->fork[p->fleft]);
 		pthread_mutex_unlock(&p->t->fork[p->frigth]);
 		say_me(p->t, p->id, "sleeping ...");
-		sleep(5);
+		usleep(500);
 	}
 	p->t->is_dead = 1;
 	// print_philo((t_philo *)arg);
@@ -63,23 +63,40 @@ void	*better_life(void *arg)
 	*/
 	return (0);
 }
+
 static void	check_life(t_table *t)
 {
 	int i;
 
 	i = 0;
-	while (!t->is_dead || t->nb_meal < t->max_meal)
-		usleep(50);
-	while (i++ <= t->nb)
+	while (i < t->nb)
 	{
-		pthread_mutex_unlock(&t->fork[i]);
-		pthread_mutex_destroy(&t->fork[i]);
+		pthread_mutex_lock(&t->eating);
+		if (get_time() - t->philo[i].last_meal > t->time_to_die
+			&& t->max_meal != t->nb)
+		{
+			t->is_dead= 1;
+			say_me(t, i, "is dead");
+			pthread_mutex_unlock(&t->eating);
+			return ;
+		}
+		pthread_mutex_unlock(&t->eating);
+		i++;
 	}
-	pthread_mutex_unlock(&t->philo[i].death);
-	pthread_mutex_destroy(&t->philo[i].death);
-	pthread_mutex_unlock(&t->mutex);
-	pthread_mutex_destroy(&t->mutex);
+	usleep(50);
 }
+	// while (!t->is_dead || t->nb_meal < t->max_meal)
+		// usleep(50);
+	// while (i++ <= t->nb)
+	// {
+		// pthread_mutex_unlock(&t->fork[i]);
+		// pthread_mutex_destroy(&t->fork[i]);
+	// }
+	// pthread_mutex_unlock(&t->philo[i].death);
+	// pthread_mutex_destroy(&t->philo[i].death);
+	// pthread_mutex_unlock(&t->state);
+	// pthread_mutex_destroy(&t->state);
+// }
 
 static void	start_time(t_table *t)
 {
