@@ -41,7 +41,7 @@ typedef enum e_state
 typedef struct s_philo
 {
 	unsigned int		id;
-	long				last_meal;
+	long long			last_meal;
 	t_state				state;
 	pthread_t			thread;
 	pthread_mutex_t		death;
@@ -58,7 +58,7 @@ typedef struct s_table
 	int					max_meal;
 	int					is_dead;
 	int					ready;
-	long				lm_time;
+	long long			lm_time;
 	t_timeval			start;
 	t_philo				*philo;
 	pthread_mutex_t		*fork;

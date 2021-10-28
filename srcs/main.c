@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:57:41 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 22:13:47 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/27 17:49:18 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 
 void	*better_life(void *arg)
 {
-	// ft_putstr_fd("\033[33mPHILO #",1);
-	// ft_putnbr(((t_philo *)arg)->id);
-	// ft_putstr_fd("\033[0m\n",1);
-	printf("\n\033[33mPHILO #%d\033[0m\n", ((t_philo *)arg)->id);
-	while (!((t_philo *)arg)->t->ready)
+	t_philo	*p;
+
+	p = arg;
+	// printf("\033[33mPHILO #%d\033[0m\n", p->id);
+	say_me(p->t, p->id, "thinking ...");
+	while (!p->t->ready)
 		;
-	printf("\n\033[32mPHILO #%d\033[0m\n", ((t_philo *)arg)->id);
-	((t_philo *)arg)->last_meal = ((t_philo *)arg)->t->lm_time;
-	say_me(((t_philo *)arg)->t, ((t_philo *)arg)->id, "JAI LA DALLE\n");
+	p->last_meal = p->t->lm_time;
+	printf("\033[32mPHILO #%d\033[0m\n", p->id);
 	sleep(10);
-	say_me(((t_philo *)arg)->t, ((t_philo *)arg)->id, "JAI LA DALLE\n");
+	say_me(p->t, p->id, "JAI LA DALLE\n");
+	sleep(10);
+	say_me(p->t, p->id, "sleeping ...\n");
+	sleep(10);
+	p->t->is_dead = 1;
 	// print_philo((t_philo *)arg);
 	/*
 	t_philo	*p;
@@ -47,7 +51,20 @@ void	*better_life(void *arg)
 	dprintf(2, "\033]31mPhilo %d sleep = %d\033[0m\n",
 		p->id, p->state);
 	*/
-	return(0);
+	return (0);
+}
+static void	check_life(t_table *t)
+{
+	while (!t->is_dead && t->nb_meal < t->max_meal)
+		usleep(50);
+	
+}
+
+static void	start_time(t_table *t)
+{
+	gettimeofday(&t->start, NULL);
+	t->lm_time = get_time_ms();
+	t->ready++;
 }
 
 int	main(int ac, char **av)
@@ -65,14 +82,12 @@ int	main(int ac, char **av)
 		return (msg_err("Arg: ", "Argument list too short\n", 7));
 	if (init(&table, nb_philo) == -1)
 		return (msg_err("Malloc failed: ", "Insufficient memory!\n", 22));
-	if (nb_philo < 2)
-		ft_err(&table, "First Arg: ", 2);
 	init_struct(&table, av);
-	table.ready++;
-	// print_table(&table);
-	// printf("%d != %d\n", nb_philo, table.nb);
-	// dprintf(2, "nan, je suis la !!\n");
-	// print_table(&table);
+	if (!table.nb || !table.time_to_die || !table.time_to_eat
+		|| !table.time_to_sleep || !table.max_meal)
+		ft_err(&table, "Arg: ", 2);
+	start_time(&table);
+	check_life(&table);
 	while (++i < table.nb)
 		pthread_join(table.philo[i].thread, NULL);
 	free_struct(&table);

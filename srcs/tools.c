@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 21:13:03 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 22:16:06 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/27 14:54:20 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ void	free_struct(t_table *table)
 	while (++i < table->nb)
 	{
 		pthread_mutex_unlock(&table->philo[i].death);
+		pthread_mutex_unlock(&table->state);
 		pthread_mutex_unlock(&table->fork[i]);
 		pthread_mutex_destroy(&table->philo[i].death);
+		pthread_mutex_destroy(&table->state);
 		pthread_mutex_destroy(&table->fork[i]);
 	}
 	if (table->fork)

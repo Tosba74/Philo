@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:41:54 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 22:06:42 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/27 18:23:12 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,22 @@ int	init(t_table *t, int nb_philo)
 	return (0);
 }
 
-// static int	init_philo(t_philo *p, int i)
-// {
-// 	p->id = i;
-// 	p->state = 0;
-// // 	// if (pthread_mutex_init(&p->death, NULL))
-// // 	// 	return (-1);
-// // 	// pthread_create(&p->thread, NULL, &better_life, &p);
-// // 	// pthread_join(p->thread, NULL);
-// 	return (0);
-// }
+static int	init_philo(t_table *t)
+{
+	int		i;
+
+	i = -1;
+	while (++i < t->nb)
+	{
+		t->philo[i].id = i;
+		t->philo[i].state = 0;
+		pthread_mutex_init(&t->philo[i].death, NULL);
+		t->philo[i].t = t;
+		pthread_create(&t->philo[i].thread, NULL,
+			better_life, &t->philo[i]);
+		pthread_mutex_init(&t->fork[i], NULL);
+	}
+}
 
 void	init_struct(t_table *t, char **av)
 {
@@ -55,19 +61,9 @@ void	init_struct(t_table *t, char **av)
 	else
 		t->max_meal = ft_atoi(av[5]);
 	t->ready = 0;
-	if (table.nb == 0 || table.time_to_die == 0 || table.time_to_eat == 0
-		|| table.time_to_sleep == 0 || table.max_meal == 0)
-			return (0);
-	while (++i < t->nb)
-	{
-		t->philo[i].id = i;
-		t->philo[i].state = 0;
-		pthread_mutex_init(&t->philo[i].death, NULL);
-		t->philo[i].t = t;
-		pthread_create(&t->philo[i].thread, NULL, better_life, &t->philo[i]);
-		pthread_mutex_init(&t->fork[i], NULL);
-	}
-	sleep(5);
-	gettimeofday(&t->start, NULL);
-	t->lm_time = get_time_ms();
+	t->is_dead = 0;
+	t->nb_meal = 0;
+	if (t->nb || t->time_to_die || t->time_to_eat
+		|| t->time_to_sleep || t->max_meal)
+		init_philo(t->philo);
 }

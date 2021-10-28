@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 12:54:38 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/26 22:03:42 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/27 14:49:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	compare_time(long time)
 	return (time < get_time_ms());
 }
 
-void	acc_sleep(long check)
+void	acc_sleep(long long check)
 {
-	long	time;
+	long long	time;
 
 	time = get_time_ms();
 	while (get_time_ms() - time < check)
