@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 21:13:03 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/27 14:54:20 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/28 13:50:51 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	ft_atoi(const char *str)
 	return (nb * neg);
 }
 
-void	ft_putnbr(long n)
+void	ft_putnbr(long long n)
 {
-	long	nb;
+	long long	nb;
 
 	nb = n;
 	if (nb < 0)

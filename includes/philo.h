@@ -31,18 +31,13 @@ typedef struct s_err
 	char	*strerror;
 }	t_err;
 
-typedef enum e_state
-{
-	THINKING,
-	EATING,
-	SLEEPING,
-}	t_state;
-
 typedef struct s_philo
 {
-	unsigned int		id;
+	int					id;
+	int					meals;
 	long long			last_meal;
-	t_state				state;
+	int					fleft;
+	int					frigth;
 	pthread_t			thread;
 	pthread_mutex_t		death;
 	struct s_table		*t;
@@ -66,24 +61,24 @@ typedef struct s_table
 	pthread_mutex_t		state;
 }	t_table;
 
-int		init(t_table *t, int nb_philo);
-void	init_struct(t_table *t, char **av);
-long	get_time_ms(void);
-int		compare_time(long time);
+int			init(t_table *t, int nb_philo);
+void		init_struct(t_table *t, char **av);
+long long	get_time(void);
+int			compare_time(long long time);
 
-int		ft_atoi(const char *str);
-void	ft_putnbr(long n);
-void	free_struct(t_table *table);
+int			ft_atoi(const char *str);
+void		ft_putnbr(long long n);
+void		free_struct(t_table *table);
 
-void	*better_life(void *arg);
+void		*better_life(void *arg);
 
-int		msg_err(char *s1, char *s2, int ret);
-void	ft_putstr_fd(char *str, int fd);
-void	ft_err(t_table *t, char *s, int err);
+int			msg_err(char *s1, char *s2, int ret);
+void		ft_putstr_fd(char *str, int fd);
+void		ft_err(t_table *t, char *s, int err);
 
-void	print_table(t_table *t);
-void	print_philo(t_philo *p);
-void	say_me(t_table *t, int id, char *s);
+void		print_table(t_table *t);
+void		print_philo(t_philo *p);
+void		say_me(t_table *t, int id, char *s);
 
 /*
 memset, printf, malloc, free, write, usleep, gettimeofday,

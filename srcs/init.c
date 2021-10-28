@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:41:54 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/27 18:23:12 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/28 16:09:06 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init(t_table *t, int nb_philo)
 	return (0);
 }
 
-static int	init_philo(t_table *t)
+static void	init_philo(t_table *t)
 {
 	int		i;
 
@@ -36,7 +36,9 @@ static int	init_philo(t_table *t)
 	while (++i < t->nb)
 	{
 		t->philo[i].id = i;
-		t->philo[i].state = 0;
+		t->philo[i].frigth = i;
+		t->philo[i].fleft = (i - 1) % t->nb;
+		t->philo[i].meals = i;
 		pthread_mutex_init(&t->philo[i].death, NULL);
 		t->philo[i].t = t;
 		pthread_create(&t->philo[i].thread, NULL,
@@ -63,7 +65,7 @@ void	init_struct(t_table *t, char **av)
 	t->ready = 0;
 	t->is_dead = 0;
 	t->nb_meal = 0;
-	if (t->nb || t->time_to_die || t->time_to_eat
+	if (t->nb > 0 || t->time_to_die || t->time_to_eat
 		|| t->time_to_sleep || t->max_meal)
-		init_philo(t->philo);
+		init_philo(t);
 }
