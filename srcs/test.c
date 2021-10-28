@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 12:54:38 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/28 15:02:03 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/28 18:20:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ long long	get_time(void)
 	return ((clock_t)tv.tv_sec * 1000 + (clock_t)tv.tv_usec / 1000);
 }
 
-int	compare_time(long long time)
+long long	compare_time(long long time)
 {
-	return (time < get_time());
+	return (get_time() - time);
 }
 
 void	acc_sleep(long long check)
@@ -57,7 +57,7 @@ void	print_table(t_table *t)
 	dprintf(2, "| Time_to_die ==> %4d        |\n", t->time_to_eat);
 	dprintf(2, "| Time_to_sleep ==> %4d      |\n", t->time_to_sleep);
 	dprintf(2, "| max_meal ==> %4d      |\n", t->max_meal);
-	dprintf(2, "| Time: %2d:%2d                 |\n", compare_time(get_time()), 0);
+	dprintf(2, "| Time: %2lld:%2d                 |\n", compare_time(t->lm_time), 0);
 	while (++i < t->nb)
 		print_philo(&t->philo[i]);
 }

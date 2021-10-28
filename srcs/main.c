@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:57:41 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:07:17 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/28 18:35:16 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,20 @@ void	*better_life(void *arg)
 	p->last_meal = p->t->lm_time;
 	while (!p->t->is_dead || p->meals < p->t->max_meal)
 	{
-		say_me(p->t, p->id, "thinking ...");
+		say_me(p->t, p->id, "is thinking ...");
 		pthread_mutex_lock(&p->t->fork[p->fleft]);
+		say_me(p->t, p->id, "take a fork!");
 		pthread_mutex_lock(&p->t->fork[p->frigth]);
 		say_me(p->t, p->id, "take a fork!");
-		say_me(p->t, p->id, "eating ...");
+		say_me(p->t, p->id, "is eating ...");
 		p->meals++;
-		p->last_meal = compare_time(p->last_meal);
+		p->last_meal = compare_time(p->t->lm_time);
 		if (p->meals > p->t->nb_meal)
 			p->t->nb_meal = p->meals;
 		pthread_mutex_unlock(&p->t->fork[p->fleft]);
 		pthread_mutex_unlock(&p->t->fork[p->frigth]);
-		say_me(p->t, p->id, "sleeping ...");
-		usleep(500);
+		say_me(p->t, p->id, "is sleeping ...");
+		sleep(5);
 	}
 	p->t->is_dead = 1;
 	// print_philo((t_philo *)arg);
@@ -100,7 +101,6 @@ static void	check_life(t_table *t)
 
 static void	start_time(t_table *t)
 {
-	sleep(5);
 	gettimeofday(&t->start, NULL);
 	t->lm_time = get_time();
 	t->ready++;

@@ -39,7 +39,6 @@ typedef struct s_philo
 	int					fleft;
 	int					frigth;
 	pthread_t			thread;
-	pthread_mutex_t		death;
 	struct s_table		*t;
 }	t_philo;
 
@@ -64,7 +63,7 @@ typedef struct s_table
 int			init(t_table *t, int nb_philo);
 void		init_struct(t_table *t, char **av);
 long long	get_time(void);
-int			compare_time(long long time);
+long long	compare_time(long long time);
 
 int			ft_atoi(const char *str);
 void		ft_putnbr(long long n);
