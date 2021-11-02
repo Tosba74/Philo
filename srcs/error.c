@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 19:55:10 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:33:40 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/11/02 14:25:24 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,8 @@ static const t_err	*get_err(int err)
 		{EINVAL, "Invalid argument\n"},
 		{EAGAIN, "Insufficient resources!\n"},
 		{EINVAL, "Not a typewriter\n"},
-		{EFAULT, "Bad address\n"},
-		{ENOSYS, "Function not implemented\n"},
-		{EAGAIN, "Insufficient resources!\n"},
-		{EEXIST, "File already exists!\n"},
-		{ENFILE, "File teuble overflow!\n"},
-		{EMFILE, "Too many open files!\n"},
 		{EDEADLK, "A deadlock has been detecte\nd!"},
-		{ENAMETOOLONG, "File name too long!\n"},
+		{EFAULT, "Bad address\n"},
 		{EACCES, "Permission denied!\n"}
 	};
 
@@ -68,20 +62,4 @@ void	ft_err(t_table *t, char *s, int err)
 	error = (t_err *)get_err(err);
 	free_struct(t);
 	exit(msg_err(s, error->strerror, error->err));
-}
-
-void	say_me(t_table *t, int id, char *s)
-{
-	pthread_mutex_lock(&t->state);
-	if (t->nb_meal != t->nb && !t->is_dead)
-	{
-		printf("\033[32m%lli\033[0m ", compare_time(t->lm_time));
-		printf("\033[33m[%d] %s\033[0m\n", id, s);
-	}
-	else if (s[3] == 'd')
-	{
-		printf("\033[32m%lli\033[0m ", compare_time(t->lm_time));
-		printf("[%d] %s\n", id, s);
-	}
-	pthread_mutex_unlock(&t->state);
 }

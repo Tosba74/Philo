@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 21:13:03 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:49:33 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/31 00:09:51 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ int	ft_atoi(const char *str)
 	return (nb * neg);
 }
 
+void	ft_swap(int *a, int *b)
+{
+	*a += *b;
+	*b = *a - *b;
+	*a -= *b;
+}
+
 void	ft_putnbr(long long n)
 {
 	long long	nb;
@@ -49,24 +56,4 @@ void	ft_putnbr(long long n)
 	if (nb > 9)
 		ft_putnbr(nb / 10);
 	write(1, (const void *)(nb % 10 + 48), 1);
-}
-
-void	free_struct(t_table *table)
-{
-	int	i;
-
-	i = -1;
-	while (++i < table->nb)
-	{
-		pthread_mutex_unlock(&table->fork[i]);
-		pthread_mutex_destroy(&table->fork[i]);
-	}
-	pthread_mutex_unlock(&table->state);
-	pthread_mutex_unlock(&table->eating);
-	pthread_mutex_destroy(&table->state);
-	pthread_mutex_destroy(&table->eating);
-	if (table->fork)
-		free(table->fork);
-	if (table->philo)
-		free(table->philo);
 }

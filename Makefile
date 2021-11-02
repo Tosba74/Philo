@@ -6,7 +6,7 @@
 #    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/22 23:19:50 by bmangin           #+#    #+#              #
-#    Updated: 2021/10/24 09:57:30 by bmangin          ###   ########lyon.fr    #
+#    Updated: 2021/10/30 16:22:39 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME		:= philo
 PATH_I		:= includes
 PATH_S		:= srcs
 PATH_B		:= .bin
-
+PATH_T		:= ../philosophers_tester
 VPATH	= ${PATH_I} ${PATH_S} ${PATH_B}
 
 FILES		= main.c init.c tools.c philo_action.c error.c test.c
@@ -30,6 +30,10 @@ BIN			= ${addprefix ${PATH_B}/, ${OBJS}}
 
 H_FILES		:= philo.h
 HEADER		= ${addprefix ${PATH_I}/, ${H_FILES}}
+
+INIT_T	:= init_test.sh
+TEST_P	:= philosophers_tester.sh
+TEST_L	:= tester_loop.sh
 
 
 # ******************************************************* #
@@ -64,6 +68,11 @@ ${NAME}:	${BIN} ${HEADERS}
 fs:		crea_b ${BIN} ${HEADER}
 		${CCFS} ${INC} ${BIN} -o ${NAME} ${LIB}
 
+test:	${NAME}
+		${shell ./${PATH_T}/${INIT_T}}
+		${shell ./${PATH_T}/${TEST_P}}
+		${shell ./${PATH_T}/${TEST_L}}
+	
 crea_b :
 	mkdir -p ${PATH_B}
 	${shell mkdir -p ${PATH_B}}
@@ -82,4 +91,4 @@ norm:
 	${NORM} ${SRCS} ${HEADER}
 	$(MAKE) ./$(PATH_L) norm
 	
-.PHONY:		all crea_b fs seg bonus clean fclean re seg norm
+.PHONY:		all crea_b fs seg test bonus clean fclean re seg norm

@@ -16,7 +16,7 @@
 # define EFAULT 14			//"Bad address\n"},
 # define ENOSYS 78			//"Function not implemented\n"},
 # define EAGAIN 35			//"Insufficient resources!\n"},
-# define EEXIST 17			//"File already exists!\n"},
+# define EEXIST 17			//"File alpower exists!\n"},
 # define ENFILE 23			//"File teuble overflow!\n"},
 # define EMFILE 24			//"Too many open files!\n"},
 # define EDEADLK 11			//"A deadlock has been detecte\nd!"},
@@ -31,13 +31,19 @@ typedef struct s_err
 	char	*strerror;
 }	t_err;
 
+typedef enum e_power
+{
+	ON,
+	OFF
+}	t_power;
+
 typedef struct s_philo
 {
 	int					id;
 	int					meals;
 	long long			last_meal;
 	int					fleft;
-	int					frigth;
+	int					s_fork;
 	pthread_t			thread;
 	struct s_table		*t;
 }	t_philo;
@@ -45,32 +51,34 @@ typedef struct s_philo
 typedef struct s_table
 {
 	int					nb;
-	int					nb_meal;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					max_meal;
-	int					is_dead;
-	int					ready;
-	long long			lm_time;
-	t_timeval			start;
+	t_power				power;
+	long long			start;
+	t_timeval			time;
 	t_philo				*philo;
+	pthread_mutex_t		*death;
 	pthread_mutex_t		*fork;
-	pthread_mutex_t		eating;
-	pthread_mutex_t		state;
+	pthread_mutex_t		*speaker;
 }	t_table;
 
 int			init(t_table *t, int nb_philo);
 void		init_struct(t_table *t, char **av);
 void		acc_sleep(long long check);
 long long	get_time(void);
-long long	compare_time(long long time);
+int			compare_time(long long time);
 
 int			ft_atoi(const char *str);
+void		ft_swap(int *a, int *b);
 void		ft_putnbr(long long n);
 void		free_struct(t_table *table);
 
 void		*better_life(void *arg);
+void		phil_sleep(t_philo *p);
+void		think(t_philo *p);
+void		eat(t_philo *p);
 
 int			msg_err(char *s1, char *s2, int ret);
 void		ft_putstr_fd(char *str, int fd);

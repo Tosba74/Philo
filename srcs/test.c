@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 12:54:38 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:20:15 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/10/31 23:38:43 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ long long	get_time(void)
 	return ((clock_t)tv.tv_sec * 1000 + (clock_t)tv.tv_usec / 1000);
 }
 
-long long	compare_time(long long time)
+int	compare_time(long long time)
 {
 	return (get_time() - time);
 }
@@ -37,8 +37,9 @@ void	acc_sleep(long long check)
 void	print_philo(t_philo *p)
 {
 	dprintf(2, "+=============================+\n");
-	dprintf(2, "| id => %2u                      |\n", p->id);
-	dprintf(2, "| fleft => %2d || fright = > %2d    |\n", p->fleft, p->frigth);
+	dprintf(2, "| id => %2u /%2u                |\n", p->id, p->t->nb);
+	dprintf(2, "| meals =>%3d  <%3d           |\n", p->meals, p->t->max_meal);
+	dprintf(2, "| left => %2d || right = > %2d  |\n", p->id, p->s_fork);
 	dprintf(2, "| Pthread %d adrress           |\n", p->id);
 	dprintf(2, "| > %p            |\n", p->thread);
 	dprintf(2, "| Table adrress               |\n");
@@ -57,7 +58,7 @@ void	print_table(t_table *t)
 	dprintf(2, "| Time_to_die ==> %4d        |\n", t->time_to_eat);
 	dprintf(2, "| Time_to_sleep ==> %4d      |\n", t->time_to_sleep);
 	dprintf(2, "| max_meal ==> %4d      |\n", t->max_meal);
-	dprintf(2, "| Time: %2lld:%2d                 |\n", compare_time(t->lm_time), 0);
+	// dprintf(2, "| Time: %2lld:%2d                 |\n", compare_time(t->start), 0);
 	while (++i < t->nb)
 		print_philo(&t->philo[i]);
 }

@@ -9,14 +9,14 @@ void	*better_life(void *arg)
 	philo = arg;
 	dprintf(2, "\033[34mPhilo #%d \033[0m\n", philo->nb);
 	dprintf(2, "\033[32mPhilo %d is thinking = %d\033[0m\n",
-		philo->id, philo->state);
-	philo->state += 1;
+		philo->id, philo->speaker);
+	philo->speaker += 1;
 	pthread_mutex_lock(&philo->fork);
 	dprintf(2, "\033]33mPhilo %d is eating = %d\033[0m\n",
-		philo->id, philo->state);
-	philo->state == SLEEPING;
+		philo->id, philo->speaker);
+	philo->speaker == SLEEPING;
 	dprintf(2, "\033]31mPhilo %d is sleeping = %d\033[0m\n",
-		philo->id, philo->state);
+		philo->id, philo->speaker);
 	return 0;
 }
 
@@ -41,7 +41,7 @@ t_philo	**init_philo_thread(void)
 		philo[i]->time_to_eat = 63;
 		philo[i]->max_meal = 63;
 		philo[i]->time_to_sleep = 63;
-		philo[i]->state = THINKING;
+		philo[i]->speaker = THINKING;
 		pthread_create(&philo[i]->thread, NULL, &better_life, philo[i]);
 		if (!(philo[i]->fork = malloc(sizeof(pthread_mutex_t))))
 			ft_err("Malloc mutex", 0);
