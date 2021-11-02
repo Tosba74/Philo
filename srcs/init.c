@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:41:54 by bmangin           #+#    #+#             */
-/*   Updated: 2021/11/02 15:28:03 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/11/02 15:56:31 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	init_struct(t_table *t, char **av)
 	t->time_to_eat = ft_atoi(av[3]);
 	t->time_to_sleep = ft_atoi(av[4]);
 	if (!av[5])
-		t->max_meal = t->nb;
+		t->max_meal = -1;
 	else
 		t->max_meal = ft_atoi(av[5]);
 	t->power = OFF;

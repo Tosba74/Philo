@@ -78,9 +78,7 @@ void	*better_life(void *arg)
 		eat(p);
 		if (compare_time(p->last_meal) >= p->t->time_to_die
 			|| p->meals == p->t->max_meal)
-		{
 			p->t->power = OFF;
-		}
 		if (p->t->nb == 1 || p->t->power == OFF)
 			return (NULL);
 		phil_sleep(p);
