@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 21:13:03 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/31 00:09:51 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 19:16:40 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,22 @@ void	ft_putnbr(long long n)
 	if (nb > 9)
 		ft_putnbr(nb / 10);
 	write(1, (const void *)(nb % 10 + 48), 1);
+}
+
+int	ft_strlen(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+void	ft_putstr_fd(char *str, int fd)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	write(fd, str, len);
 }

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:41:54 by bmangin           #+#    #+#             */
-/*   Updated: 2021/11/02 15:56:31 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/11/04 01:13:47 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ static void	init_philo(t_table *t)
 		t->philo[i].id = i;
 		t->philo[i].meals = 0;
 		t->philo[i].fleft = i;
-		t->philo[i].s_fork = i + 1;
-		if (t->philo[i].s_fork == t->nb)
-			t->philo[i].s_fork = 0;
+		t->philo[i].fright = i + 1;
+		if (t->philo[i].fright == t->nb)
+			t->philo[i].fright = 0;
 		t->philo[i].t = t;
 		pthread_mutex_init(&t->fork[i], NULL);
 		pthread_mutex_init(&t->death[i], NULL);
@@ -100,8 +100,12 @@ void	init_struct(t_table *t, char **av)
 		t->max_meal = -1;
 	else
 		t->max_meal = ft_atoi(av[5]);
-	t->power = OFF;
+	t->dead = 0;
+	t->ready = 0;
+	t->all_eat = 0;
 	if (t->nb > 0 || t->time_to_die || t->time_to_eat
 		|| t->time_to_sleep || t->max_meal)
 		init_philo(t);
+	else
+		ft_err(t, "Arg: ", 2);
 }

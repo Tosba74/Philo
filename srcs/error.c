@@ -6,29 +6,11 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 19:55:10 by bmangin           #+#    #+#             */
-/*   Updated: 2021/11/02 14:25:24 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 19:16:43 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	ft_strlen(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-void	ft_putstr_fd(char *str, int fd)
-{
-	int	len;
-
-	len = ft_strlen(str);
-	write(fd, str, len);
-}
 
 static const t_err	*get_err(int err)
 {

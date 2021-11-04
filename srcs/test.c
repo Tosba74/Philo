@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 12:54:38 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/31 23:38:43 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 23:52:00 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_philo(t_philo *p)
 	dprintf(2, "+=============================+\n");
 	dprintf(2, "| id => %2u /%2u                |\n", p->id, p->t->nb);
 	dprintf(2, "| meals =>%3d  <%3d           |\n", p->meals, p->t->max_meal);
-	dprintf(2, "| left => %2d || right = > %2d  |\n", p->id, p->s_fork);
+	dprintf(2, "| left => %2d || right = > %2d  |\n", p->id, p->fright);
 	dprintf(2, "| Pthread %d adrress           |\n", p->id);
 	dprintf(2, "| > %p            |\n", p->thread);
 	dprintf(2, "| Table adrress               |\n");
