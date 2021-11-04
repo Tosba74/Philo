@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 12:54:38 by bmangin           #+#    #+#             */
-/*   Updated: 2021/11/03 23:52:00 by bmangin          ###   ########lyon.fr   */
+/*   Created: 2021/11/04 17:26:18 by bmangin           #+#    #+#             */
+/*   Updated: 2021/11/04 17:26:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	print_table(t_table *t)
 	dprintf(2, "| Time_to_die ==> %4d        |\n", t->time_to_eat);
 	dprintf(2, "| Time_to_sleep ==> %4d      |\n", t->time_to_sleep);
 	dprintf(2, "| max_meal ==> %4d      |\n", t->max_meal);
-	// dprintf(2, "| Time: %2lld:%2d                 |\n", compare_time(t->start), 0);
 	while (++i < t->nb)
 		print_philo(&t->philo[i]);
 }

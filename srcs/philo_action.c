@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:41:57 by bmangin           #+#    #+#             */
-/*   Updated: 2021/11/02 17:29:45y bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/11/04 17:25:35 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	eat(t_philo *p)
 	pthread_mutex_lock(&p->t->death[p->id]);
 	p->last_meal = get_time();
 	say_me(p->t, p->id, "is eating");
-	acc_sleep(p->t->time_to_eat);
 	pthread_mutex_unlock(&p->t->death[p->id]);
+	acc_sleep(p->t->time_to_eat);
 	pthread_mutex_unlock(&p->t->fork[p->fright]);
 	pthread_mutex_unlock(&p->t->fork[p->fleft]);
 }

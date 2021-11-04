@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 17:26:56 by bmangin           #+#    #+#             */
+/*   Updated: 2021/11/04 17:26:58 by bmangin          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -8,20 +20,20 @@
 # include <sys/time.h>
 
 # include <errno.h>
-# define ENOMEM 12			//"Insufficient memory!\n"},
-# define E2BIG 7			//"Argument list too long\n"},
-# define EINVAL 22			//"Invalid argument, Use -debug\n"},
-# define EAGAIN 35			//"Insufficient resources!\n"},
-# define EINVAL 22			//"Not a typewriter\n"},
-# define EFAULT 14			//"Bad address\n"},
-# define ENOSYS 78			//"Function not implemented\n"},
-# define EAGAIN 35			//"Insufficient resources!\n"},
-# define EEXIST 17			//"File alpower exists!\n"},
-# define ENFILE 23			//"File teuble overflow!\n"},
-# define EMFILE 24			//"Too many open files!\n"},
-# define EDEADLK 11			//"A deadlock has been detecte\nd!"},
-# define ENAMETOOLONG 63	//"File name too long!\n"},
-# define EACCES 13			//"Permission denied!\n"}
+# define ENOMEM 12
+# define E2BIG 7
+# define EINVAL 22
+# define EAGAIN 35
+# define EINVAL 22
+# define EFAULT 14
+# define ENOSYS 78
+# define EAGAIN 35
+# define EEXIST 17
+# define ENFILE 23
+# define EMFILE 24
+# define EDEADLK 11
+# define ENAMETOOLONG 63
+# define EACCES 13
 
 typedef struct timeval		t_timeval;
 
@@ -83,11 +95,5 @@ void		free_struct(t_table *table);
 void		print_table(t_table *t);
 void		print_philo(t_philo *p);
 void		say_me(t_table *t, int id, char *s);
-
-/*
-memset, printf, malloc, free, write, usleep, gettimeofday,
-pthread_create, pthread_detach, pthread_join, pthread_mutex_init,
-pthread_mutex_destroy, pthread_mutex_lock, pthread_mutex_unlock
-*/
 
 #endif

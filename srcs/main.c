@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:57:41 by bmangin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:43:59y bmangin          ###   ########lyon.fr   */
+/*   Updated: 2021/11/04 17:27:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	check_life(t_table *t)
 		while (i < t->nb)
 		{
 			pthread_mutex_lock(&t->death[i]);
-			if (get_time() - t->philo[i].last_meal > t->time_to_die
+			if (compare_time(t->philo[i].last_meal) > t->time_to_die
 				&& t->all_eat != t->nb)
 			{
 				t->dead = 1;
@@ -92,7 +92,6 @@ int	main(int ac, char **av)
 	while (++i < table.nb)
 		if (table.philo[i].thread)
 			pthread_join(table.philo[i].thread, NULL);
-	print_table(&table);
 	free_struct(&table);
 	return (0);
 }

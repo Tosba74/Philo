@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/07/22 23:19:50 by bmangin           #+#    #+#              #
-#    Updated: 2021/10/30 16:22:39 by bmangin          ###   ########lyon.fr    #
+#    Created: 2021/11/04 17:26:47 by bmangin           #+#    #+#              #
+#    Updated: 2021/11/04 17:26:48 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,6 @@ test:	${NAME}
 		${shell ./${PATH_T}/${TEST_L}}
 	
 crea_b :
-	mkdir -p ${PATH_B}
 	${shell mkdir -p ${PATH_B}}
 
 clean:
@@ -89,6 +88,5 @@ seg: fclean fs
 
 norm:
 	${NORM} ${SRCS} ${HEADER}
-	$(MAKE) ./$(PATH_L) norm
 	
 .PHONY:		all crea_b fs seg test bonus clean fclean re seg norm
